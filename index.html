@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Happy Birthday to My Best Friend! 💖✨</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Ambient Particle Canvas -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <!-- Floating Audio Controls -->
+  <div class="audio-controller" id="audio-controller-btn" title="Toggle Birthday Music">
+    <span class="music-icon">🎵</span>
+    <span id="music-status-text">Play Melody 🎵</span>
+  </div>
+
+  <!-- Floating Quick Personalize Button -->
+  <button class="personalize-btn" id="personalize-modal-trigger" title="Customize Names">
+    <span>✏️</span> Personalize
+  </button>
+
+  <!-- OPENING ENVELOPE / GIFT OVERLAY -->
+  <div class="curtain-overlay" id="curtain-overlay">
+    <div class="gift-box-wrapper" id="gift-card-trigger">
+      <div class="gift-card">
+        <div class="gift-icon">🎁</div>
+        <h2>A Surprise For You!</h2>
+        <p>To someone very special on her birthday...</p>
+        <div class="tap-badge">Tap to Unwrap ✨</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN EXPERIENCE CONTAINER -->
+  <div class="container">
+
+    <!-- HERO SECTION -->
+    <header class="hero-section">
+      <div class="hero-pill">
+        <span class="sparkle-icon">✨</span>
+        <span>Today is All About Celebrating YOU</span>
+        <span class="sparkle-icon">✨</span>
+      </div>
+
+      <h1 class="hero-title">
+        Happy Birthday,<br><span class="dynamic-friend-name">Bestie</span>! 🎂💖
+      </h1>
+
+      <p class="hero-subtitle">
+        To the one who brings sunshine on rainy days, laughs until our stomachs hurt, and knows my heart inside out. Today is dedicated entirely to you!
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#cake-section" class="btn-primary">
+          <span>Make a Wish</span> 🕯️
+        </a>
+        <a href="#letter-section" class="btn-secondary">
+          <span>Read My Letter</span> 💌
+        </a>
+      </div>
+    </header>
+
+    <!-- INTERACTIVE BIRTHDAY CAKE -->
+    <section class="section" id="cake-section">
+      <div class="section-header">
+        <div class="section-tag">Make A Birthday Wish</div>
+        <h2 class="section-title">Blow Out Your Candles</h2>
+        <p class="section-desc">Close your eyes, think of your biggest wish for the year ahead, and tap the candles or the button below!</p>
+      </div>
+
+      <div class="cake-card">
+        <div class="cake-stage">
+          <div class="cake-svg-container">
+            <svg viewBox="0 0 240 220" width="100%" height="100%">
+              <!-- Cake Stand -->
+              <ellipse cx="120" cy="205" rx="100" ry="12" fill="#e2d8ea" />
+              <rect x="105" y="195" width="30" height="15" fill="#cfbfdc" rx="4" />
+              <ellipse cx="120" cy="195" rx="85" ry="10" fill="#f4ecfa" />
+
+              <!-- Bottom Tier -->
+              <path d="M 45 150 Q 120 162 195 150 L 195 190 Q 120 202 45 190 Z" fill="#f8b4d9" />
+              <path d="M 45 150 Q 120 162 195 150 L 195 158 Q 120 170 45 158 Z" fill="#ffffff" opacity="0.9" />
+              <!-- Cream Drips Bottom -->
+              <path d="M 45 150 C 60 165, 70 155, 85 168 C 100 155, 115 170, 130 158 C 145 170, 160 156, 175 167 C 185 158, 190 160, 195 150 Z" fill="#ffffff" />
+
+              <!-- Middle Tier -->
+              <path d="M 65 105 Q 120 115 175 105 L 175 145 Q 120 155 65 145 Z" fill="#fed7aa" />
+              <!-- Cream Drips Middle -->
+              <path d="M 65 105 C 80 120, 95 110, 110 122 C 125 110, 140 122, 155 112 C 165 120, 170 112, 175 105 Z" fill="#ffffff" />
+
+              <!-- Top Tier -->
+              <path d="M 85 70 Q 120 78 155 70 L 155 100 Q 120 108 85 100 Z" fill="#e9d5ff" />
+              <ellipse cx="120" cy="70" rx="35" ry="8" fill="#ffffff" />
+
+              <!-- Candles & Flames -->
+              <!-- Candle 1 (Left) -->
+              <rect x="95" y="44" width="6" height="26" rx="2" fill="#ff70a6" />
+              <ellipse class="candle-flame" id="flame-1" cx="98" cy="38" rx="4.5" ry="8" fill="#ffbe0b" />
+
+              <!-- Candle 2 (Center) -->
+              <rect x="117" y="38" width="6" height="32" rx="2" fill="#ffd166" />
+              <ellipse class="candle-flame" id="flame-2" cx="120" cy="32" rx="5" ry="9" fill="#ffbe0b" />
+
+              <!-- Candle 3 (Right) -->
+              <rect x="139" y="44" width="6" height="26" rx="2" fill="#06d6a0" />
+              <ellipse class="candle-flame" id="flame-3" cx="142" cy="38" rx="4.5" ry="8" fill="#ffbe0b" />
+
+              <!-- Strawberry / Sprinkles -->
+              <circle cx="90" cy="88" r="2.5" fill="#e06d9f" />
+              <circle cx="110" cy="94" r="2.5" fill="#f7b733" />
+              <circle cx="130" cy="89" r="2.5" fill="#9067c6" />
+              <circle cx="150" cy="93" r="2.5" fill="#e06d9f" />
+
+              <circle cx="75" cy="132" r="3" fill="#9067c6" />
+              <circle cx="100" cy="138" r="3" fill="#e06d9f" />
+              <circle cx="135" cy="142" r="3" fill="#f7b733" />
+              <circle cx="165" cy="135" r="3" fill="#9067c6" />
+            </svg>
+          </div>
+        </div>
+
+        <button class="blow-cake-btn" id="blow-cake-btn">
+          <span>Make a Wish & Blow!</span> 💨✨
+        </button>
+
+        <div class="wish-revealed-box" id="wish-revealed-box">
+          <h3>🎉 Wish Made & Sealed with Love! 🎉</h3>
+          <p>May every single dream, adventure, and secret prayer you have in your heart come true this year. You deserve all the magic the universe has to offer!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEMORY LANE / POLAROIDS -->
+    <section class="section" id="memories-section">
+      <div class="section-header">
+        <div class="section-tag">Treasured Memories</div>
+        <h2 class="section-title">Our Favorite Moments</h2>
+        <p class="section-desc">Every moment spent with you is a memory I treasure. Here's to all the crazy laughter, deep talks, and endless adventures!</p>
+      </div>
+
+      <div class="gallery-grid">
+        <!-- Polaroid 1 -->
+        <div class="polaroid-card">
+          <div class="polaroid-image-wrapper">
+            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=700&q=80" alt="Friendship and laughter" loading="lazy">
+          </div>
+          <div class="polaroid-caption">Unstoppable laughter & joy ✨</div>
+        </div>
+
+        <!-- Polaroid 2 -->
+        <div class="polaroid-card">
+          <div class="polaroid-image-wrapper">
+            <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=700&q=80" alt="Celebration sparkles" loading="lazy">
+          </div>
+          <div class="polaroid-caption">Golden hour & sparklers 🌟</div>
+        </div>
+
+        <!-- Polaroid 3 -->
+        <div class="polaroid-card">
+          <div class="polaroid-image-wrapper">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=700&q=80" alt="Sunshine and adventures" loading="lazy">
+          </div>
+          <div class="polaroid-caption">Partners in crime forever 👯‍♀️</div>
+        </div>
+
+        <!-- Polaroid 4 -->
+        <div class="polaroid-card">
+          <div class="polaroid-image-wrapper">
+            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=700&q=80" alt="Birthday sweetness" loading="lazy">
+          </div>
+          <div class="polaroid-caption">Sweetest memories together 🍰</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REASONS WHY YOU'RE MY BEST FRIEND -->
+    <section class="section" id="reasons-section">
+      <div class="section-header">
+        <div class="section-tag">From The Heart</div>
+        <h2 class="section-title">Why You're My Favorite Human</h2>
+        <p class="section-desc">Tap each card to flip and reveal a reason why you mean the absolute world to me!</p>
+      </div>
+
+      <div class="reasons-grid">
+        <!-- Card 1 -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="flip-icon">😂</div>
+              <h3>Your Laugh</h3>
+              <div class="flip-hint">Tap to flip ↻</div>
+            </div>
+            <div class="flip-card-back">
+              <p>Your laugh is literally the most contagious sound on earth. Even on my worst days, you can turn everything around in two seconds flat.</p>
+              <div class="heart-mini">💖</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="flip-icon">🌙</div>
+              <h3>2 AM Soul Talks</h3>
+              <div class="flip-hint">Tap to flip ↻</div>
+            </div>
+            <div class="flip-card-back">
+              <p>From silly rants to our deepest hopes and fears, you're the one person I can talk to about absolutely anything with zero judgment.</p>
+              <div class="heart-mini">✨</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="flip-icon">🛡️</div>
+              <h3>Always Having My Back</h3>
+              <div class="flip-hint">Tap to flip ↻</div>
+            </div>
+            <div class="flip-card-back">
+              <p>Through every up and down, you have stood by my side with unconditional loyalty. Having you in my corner makes me feel unstoppable.</p>
+              <div class="heart-mini">🌸</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="flip-icon">💛</div>
+              <h3>Your Golden Heart</h3>
+              <div class="flip-hint">Tap to flip ↻</div>
+            </div>
+            <div class="flip-card-back">
+              <p>You care so genuinely for the people around you. Your kindness, empathy, and patience inspire me every single day.</p>
+              <div class="heart-mini">🌼</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="flip-icon">🤫</div>
+              <h3>Our Secret Language</h3>
+              <div class="flip-hint">Tap to flip ↻</div>
+            </div>
+            <div class="flip-card-back">
+              <p>One glance across a crowded room and we both know exactly what the other is thinking. Nobody gets me the way you do!</p>
+              <div class="heart-mini">⚡</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="flip-icon">👑</div>
+              <h3>Simply Being YOU</h3>
+              <div class="flip-hint">Tap to flip ↻</div>
+            </div>
+            <div class="flip-card-back">
+              <p>Never change for anyone. You are vibrant, brilliant, beautiful inside and out, and the most incredible best friend anyone could ever dream of.</p>
+              <div class="heart-mini">🌟</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BALLOON POPPING MINI-GAME -->
+    <section class="section" id="balloons-section">
+      <div class="section-header">
+        <div class="section-tag">Pop-A-Balloon Mini Game</div>
+        <h2 class="section-title">Pop For A Secret Compliment</h2>
+        <p class="section-desc">Tap any floating balloon to pop it and reveal a secret sweet message inside!</p>
+      </div>
+
+      <div class="balloon-zone">
+        <div class="balloons-flex">
+          <div class="balloon-item" title="Pop me!">
+            <div class="balloon-bubble pink">🎈</div>
+            <div class="balloon-string"></div>
+          </div>
+          <div class="balloon-item" title="Pop me!">
+            <div class="balloon-bubble purple">🎈</div>
+            <div class="balloon-string"></div>
+          </div>
+          <div class="balloon-item" title="Pop me!">
+            <div class="balloon-bubble gold">🎈</div>
+            <div class="balloon-string"></div>
+          </div>
+          <div class="balloon-item" title="Pop me!">
+            <div class="balloon-bubble blue">🎈</div>
+            <div class="balloon-string"></div>
+          </div>
+          <div class="balloon-item" title="Pop me!">
+            <div class="balloon-bubble green">🎈</div>
+            <div class="balloon-string"></div>
+          </div>
+        </div>
+
+        <div class="secret-compliment-reveal" id="secret-compliment-reveal">
+          ✨ Tap any balloon above to pop it and reveal a secret compliment! ✨
+        </div>
+      </div>
+    </section>
+
+    <!-- THE HEARTFELT LETTER -->
+    <section class="section" id="letter-section">
+      <div class="section-header">
+        <div class="section-tag">A Letter To You</div>
+        <h2 class="section-title">Read With All My Love</h2>
+      </div>
+
+      <div class="letter-wrapper">
+        <article class="letter-paper">
+          <div class="wax-seal">💌</div>
+
+          <h2 class="letter-greeting">Dearest <span class="dynamic-friend-name">Bestie</span>,</h2>
+
+          <div class="letter-body">
+Happy, happiest birthday to my favorite human in the whole world! 
+
+Words genuinely fail to capture how much your friendship means to me. Having you in my life is one of the greatest blessings I've ever known. You've been my anchor when things were stormy, my dance partner when there was music, and the first person I want to celebrate every single win with.
+
+Thank you for your warmth, your unwavering support, your silly jokes, and the comforting feeling that no matter how chaotic the world gets, you are always there. 
+
+On your birthday, my biggest wish for you is boundless peace, pure joy, thrilling adventures, and love in every single corner of your life. May this new year bring you everything your wonderful heart has been dreaming of.
+
+I love you more than words could ever say, today and every single day after.
+          </div>
+
+          <div class="letter-signoff">
+            Forever & Always,<br>
+            <span class="dynamic-sender-name">Your Best Friend</span> 💖
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- FINALE & REPLAY -->
+    <section class="finale-section">
+      <button class="celebrate-again-btn" id="celebrate-again-btn">
+        <span>Celebrate Again! Shower With Confetti 🎊</span>
+      </button>
+
+      <div class="footer-credits">
+        Made with infinite love for <span class="dynamic-friend-name">Bestie</span> on her special day ✨
+      </div>
+    </section>
+
+  </div>
+
+  <!-- QUICK PERSONALIZE MODAL -->
+  <div class="modal-backdrop" id="personalize-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Personalize Names</h3>
+        <button class="modal-close-btn" id="modal-close">&times;</button>
+      </div>
+      <div class="input-group">
+        <label for="input-friend-name">Her Name / Nickname</label>
+        <input type="text" id="input-friend-name" placeholder="e.g. Sarah, Emma, Bestie">
+      </div>
+      <div class="input-group">
+        <label for="input-sender-name">Your Name / Sign-off</label>
+        <input type="text" id="input-sender-name" placeholder="e.g. Alex, Your Bestie">
+      </div>
+      <button class="modal-save-btn" id="modal-save">Save & Update Surprise ✨</button>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
