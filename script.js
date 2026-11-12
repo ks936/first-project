@@ -7,6 +7,7 @@
   const state = {
     friendName: localStorage.getItem('bday_friend_name') || 'Bestie',
     senderName: localStorage.getItem('bday_sender_name') || 'Your Best Friend',
+    customLetter: localStorage.getItem('bday_custom_letter') || null,
     candlesBlown: false,
     musicPlaying: false,
     audioCtx: null,
@@ -223,11 +224,29 @@
       el.textContent = state.senderName;
     });
 
+    const letterBodyEl = document.querySelector('.letter-body');
+    if (letterBodyEl && state.customLetter) {
+      letterBodyEl.textContent = state.customLetter;
+    }
+
     const inputFriend = document.getElementById('input-friend-name');
     if (inputFriend) inputFriend.value = state.friendName;
 
     const inputSender = document.getElementById('input-sender-name');
     if (inputSender) inputSender.value = state.senderName;
+
+    const inputLetter = document.getElementById('input-letter-body');
+    if (inputLetter && state.customLetter) inputLetter.value = state.customLetter;
+
+    // Restore saved polaroid photos
+    const polaroidCards = document.querySelectorAll('.polaroid-card');
+    polaroidCards.forEach((card, idx) => {
+      const savedPhoto = localStorage.getItem(`bday_photo_${idx}`);
+      if (savedPhoto) {
+        const img = card.querySelector('.polaroid-img');
+        if (img) img.src = savedPhoto;
+      }
+    });
   }
 
   // Setup DOM Events
@@ -382,7 +401,41 @@
       });
     }
 
-    // 7. Personalize Modal
+    // 7. Polaroid Photo Swap
+    const polaroidCards = document.querySelectorAll('.polaroid-card');
+    polaroidCards.forEach((card, idx) => {
+      const uploadBtn = card.querySelector('.polaroid-upload-btn');
+      const fileInput = card.querySelector('.polaroid-file-input');
+      const img = card.querySelector('.polaroid-img');
+
+      if (uploadBtn && fileInput && img) {
+        uploadBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const base64Data = event.target.result;
+              img.src = base64Data;
+              try {
+                localStorage.setItem(`bday_photo_${idx}`, base64Data);
+              } catch (err) {
+                console.warn('Storage limit reached for image:', err);
+              }
+              sound.playTone(800, 0.2);
+              fireConfetti({ particleCount: 30 });
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      }
+    });
+
+    // 8. Personalize Modal
     const modalTrigger = document.getElementById('personalize-modal-trigger');
     const modal = document.getElementById('personalize-modal');
     const modalClose = document.getElementById('modal-close');
@@ -404,6 +457,7 @@
       modalSave.addEventListener('click', () => {
         const inputFriend = document.getElementById('input-friend-name');
         const inputSender = document.getElementById('input-sender-name');
+        const inputLetter = document.getElementById('input-letter-body');
 
         if (inputFriend && inputFriend.value.trim()) {
           state.friendName = inputFriend.value.trim();
@@ -412,6 +466,14 @@
         if (inputSender && inputSender.value.trim()) {
           state.senderName = inputSender.value.trim();
           localStorage.setItem('bday_sender_name', state.senderName);
+        }
+        if (inputLetter) {
+          state.customLetter = inputLetter.value.trim() || null;
+          if (state.customLetter) {
+            localStorage.setItem('bday_custom_letter', state.customLetter);
+          } else {
+            localStorage.removeItem('bday_custom_letter');
+          }
         }
 
         updatePersonalizedContent();
