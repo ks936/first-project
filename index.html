@@ -153,33 +153,41 @@
 
       <div class="gallery-grid">
         <!-- Polaroid 1 -->
-        <div class="polaroid-card">
+        <div class="polaroid-card" data-polaroid-index="0">
           <div class="polaroid-image-wrapper">
-            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=700&q=80" alt="Friendship and laughter" loading="lazy">
+            <img class="polaroid-img" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=700&q=80" alt="Friendship and laughter" loading="lazy">
+            <button class="polaroid-upload-btn" type="button">📷 Change</button>
+            <input type="file" class="polaroid-file-input" accept="image/*" style="display: none;">
           </div>
           <div class="polaroid-caption">Unstoppable laughter & joy ✨</div>
         </div>
 
         <!-- Polaroid 2 -->
-        <div class="polaroid-card">
+        <div class="polaroid-card" data-polaroid-index="1">
           <div class="polaroid-image-wrapper">
-            <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=700&q=80" alt="Celebration sparkles" loading="lazy">
+            <img class="polaroid-img" src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=700&q=80" alt="Celebration sparkles" loading="lazy">
+            <button class="polaroid-upload-btn" type="button">📷 Change</button>
+            <input type="file" class="polaroid-file-input" accept="image/*" style="display: none;">
           </div>
           <div class="polaroid-caption">Golden hour & sparklers 🌟</div>
         </div>
 
         <!-- Polaroid 3 -->
-        <div class="polaroid-card">
+        <div class="polaroid-card" data-polaroid-index="2">
           <div class="polaroid-image-wrapper">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=700&q=80" alt="Sunshine and adventures" loading="lazy">
+            <img class="polaroid-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=700&q=80" alt="Sunshine and adventures" loading="lazy">
+            <button class="polaroid-upload-btn" type="button">📷 Change</button>
+            <input type="file" class="polaroid-file-input" accept="image/*" style="display: none;">
           </div>
           <div class="polaroid-caption">Partners in crime forever 👯‍♀️</div>
         </div>
 
         <!-- Polaroid 4 -->
-        <div class="polaroid-card">
+        <div class="polaroid-card" data-polaroid-index="3">
           <div class="polaroid-image-wrapper">
-            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=700&q=80" alt="Birthday sweetness" loading="lazy">
+            <img class="polaroid-img" src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=700&q=80" alt="Birthday sweetness" loading="lazy">
+            <button class="polaroid-upload-btn" type="button">📷 Change</button>
+            <input type="file" class="polaroid-file-input" accept="image/*" style="display: none;">
           </div>
           <div class="polaroid-caption">Sweetest memories together 🍰</div>
         </div>
@@ -375,7 +383,7 @@ I love you more than words could ever say, today and every single day after.
   <div class="modal-backdrop" id="personalize-modal">
     <div class="modal-box">
       <div class="modal-header">
-        <h3>Personalize Names</h3>
+        <h3>Personalize Surprise</h3>
         <button class="modal-close-btn" id="modal-close">&times;</button>
       </div>
       <div class="input-group">
@@ -384,7 +392,11 @@ I love you more than words could ever say, today and every single day after.
       </div>
       <div class="input-group">
         <label for="input-sender-name">Your Name / Sign-off</label>
-        <input type="text" id="input-sender-name" placeholder="e.g. Alex, Your Bestie">
+        <input type="text" id="input-sender-name" placeholder="e.g. Alex, Your Best Friend">
+      </div>
+      <div class="input-group">
+        <label for="input-letter-body">Custom Letter Message (Optional)</label>
+        <textarea id="input-letter-body" rows="5" placeholder="Leave empty for the default heartfelt letter, or write your own..."></textarea>
       </div>
       <button class="modal-save-btn" id="modal-save">Save & Update Surprise ✨</button>
     </div>
